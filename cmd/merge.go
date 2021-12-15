@@ -47,7 +47,7 @@ to quickly create a Cobra application.`,
 			return
 		}
 
-		err = pdf.SetFont("wts11", "", 14)
+		err = pdf.SetFont("wts11", "", 14, "")
 		if err != nil {
 			log.Print(err.Error())
 			return
