@@ -25,11 +25,5 @@ jobs:
 workflows:
   plan_approve_apply:
     jobs:
-      - plan:
-          filters:
-            branches:
-              only:
-                - dev
-                - /dev-.*/
-                - /stg-.*/
-                - master
+      - plan
+          
