@@ -1,0 +1,36 @@
+version: 2.1
+
+executors:
+  default-executor:
+    docker:
+      - image: circleci/golang:1.16-bullseye-node-browsers-legacy
+
+commands:
+  install_dependencies:
+    steps:
+      name: "Install dependencies"
+      command: |
+        curl -sfL https://raw.githubusercontent.com/reviewdog/reviewdog/master/install.sh | sh -s -- -b /bin
+  terraform_validate:
+    steps:
+      - run: go vet ./... 2>&1 | reviewdog -f=govet -reporter=github-pr-review
+
+jobs:
+  plan:
+    executor: default-executor
+    steps:
+      - checkout
+      - install_dependencies
+      - terraform_validate
+
+workflows:
+  plan_approve_apply:
+    jobs:
+      - plan:
+          filters:
+            branches:
+              only:
+                - dev
+                - /dev-.*/
+                - /stg-.*/
+                - master
