@@ -1,31 +1,23 @@
-version: 2.1
-
-executors:
-  default-executor:
-    docker:
-      - image: circleci/golang:1.16-bullseye-node-browsers-legacy
-
-commands:
-  install_dependencies:
-    steps:
-      - run: curl -sfL https://raw.githubusercontent.com/reviewdog/reviewdog/master/install.sh | sh -s -- -b ~/bin
-      - run: go get -u golang.org/x/lint/golint
-
-  terraform_validate:
-    steps:
-      - run: golint ./... | reviewdog -f golint -diff="git diff FETCH_HEAD" -reporter=github-pr-check -tee
-      # - run: go vet ./... 2>&1 | ~/bin/reviewdog -f=govet  -diff="git diff FETCH_HEAD" -tee
+version: 2
 
 jobs:
-  plan:
-    executor: default-executor
+  lint:
+    working_directory: ~/reviewdog
+    docker:
+      - image: circleci/golang:1.16
     steps:
-      - checkout 
-      - install_dependencies
-      - terraform_validate
-
+      - checkout
+      - run:
+          name: System information
+          command: 'echo "Golang $(go version)"'
+      - run: 'curl -sfL https://raw.githubusercontent.com/reviewdog/reviewdog/master/install.sh| sh -s -- -b $(go env GOPATH)/bin'
+      - run: '( cd linters && go get golang.org/x/lint/golint )'
+      - run:
+          command: |-
+            set +o pipefail
+            golint ./... | reviewdog -f=golint -name=golint-circleci -reporter=github-pr-review
 workflows:
-  plan_approve_apply:
+  version: 2
+  lint:
     jobs:
-      - plan
-          
+      - lint
