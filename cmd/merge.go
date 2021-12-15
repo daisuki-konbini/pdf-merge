@@ -52,7 +52,6 @@ to quickly create a Cobra application.`,
 			log.Print(err.Error())
 			return
 		}
-		353
 		pdf.AddOutline("1")
 		pdf.Cell(nil, "1")
 		pdf.AddPage()
