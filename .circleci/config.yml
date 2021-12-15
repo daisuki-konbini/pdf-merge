@@ -15,7 +15,7 @@ jobs:
       - run:
           command: |-
             set +o pipefail
-            golint ./... | reviewdog -f=golint -name=golint-circleci -reporter=github-pr-review -level=info -tee
+            golint ./... | reviewdog -f=golint -name=golint-circleci -reporter=github-pr-check -level=info -tee
 workflows:
   version: 2
   lint:
