@@ -12,7 +12,7 @@ commands:
 
   terraform_validate:
     steps:
-      - run: go vet ./... 2>&1 | ~/bin/reviewdog -f=govet -reporter=github-pr-review
+      - run: go vet ./... 2>&1 | ~/bin/reviewdog -f=govet -reporter=github-pr-review -diff="git diff FETCH_HEAD"
 
 jobs:
   plan:
