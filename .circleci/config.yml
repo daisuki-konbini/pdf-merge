@@ -14,8 +14,8 @@ jobs:
       - run: go get -u golang.org/x/lint/golint
       - run:
           command: |-
-            set +o pipefail
-            gofmt -s -d . | reviewdog -name="gofmt" -f=diff -f.diff.strip=0 -reporter=github-pr-review -fail-on-error -tee
+            set -o pipefail
+            golint ./... | reviewdog -f=golint -name=golint-circleci -reporter=github-pr-review -tee -fail-on-error
       - run: go vet ./... 2>&1 | reviewdog -f=govet -reporter=github-pr-check
 workflows:
   version: 2
