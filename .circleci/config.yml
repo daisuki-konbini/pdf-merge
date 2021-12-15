@@ -4,18 +4,18 @@ jobs:
   lint:
     working_directory: ~/reviewdog
     docker:
-      - image: circleci/golang:1.17
+      - image: circleci/golang:1.16
     steps:
       - checkout
       - run:
           name: System information
           command: 'echo "Golang $(go version)"'
       - run: 'curl -sfL https://raw.githubusercontent.com/reviewdog/reviewdog/master/install.sh| sh -s -- -b $(go env GOPATH)/bin'
-      - run: '( cd linters && go get golang.org/x/lint/golint )'
+      - run: go get -u golang.org/x/lint/golint
       - run:
           command: |-
             set +o pipefail
-            golint ./... | reviewdog -f=golint -name=golint-circleci -reporter=github-pr-review
+            golint ./... | reviewdog -f=golint -name=golint-circleci -reporter=github-pr-review -tee
 workflows:
   version: 2
   lint:
