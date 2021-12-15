@@ -15,7 +15,7 @@ jobs:
       - run:
           command: |-
             set -o pipefail
-            reviewdog -conf=./.reviewdog.yml -reporter=github-pr-check
+            reviewdog -conf=./.reviewdog.yml -reporter=github-pr-review
 workflows:
   version: 2
   lint:
