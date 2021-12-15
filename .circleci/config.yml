@@ -9,6 +9,7 @@ commands:
   install_dependencies:
     steps:
       - run: curl -sfL https://raw.githubusercontent.com/reviewdog/reviewdog/master/install.sh | sh -s -- -b ~/bin
+      - run: go get -u golang.org/x/lint/golint
 
   terraform_validate:
     steps:
