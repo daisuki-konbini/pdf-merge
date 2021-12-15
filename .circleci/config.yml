@@ -15,7 +15,7 @@ jobs:
       - run:
           command: |-
             set +o pipefail
-            gofmt -s -d . | reviewdog -name="gofmt" -f=diff -f.diff.strip=0 -reporter=github-pr-review -tee
+            gofmt -s -d . | reviewdog -name="gofmt" -f=diff -f.diff.strip=0 -reporter=github-pr-review -fail-on-error -tee
       - run: go vet ./... 2>&1 | reviewdog -f=govet -reporter=github-pr-check
 workflows:
   version: 2
