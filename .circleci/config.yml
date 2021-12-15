@@ -13,7 +13,7 @@ commands:
 
   terraform_validate:
     steps:
-      - run: golint ./... | reviewdog -f golint -diff="git diff FETCH_HEAD" -reporter=github-pr-review
+      - run: golint ./... | reviewdog -f golint -diff="git diff FETCH_HEAD" -reporter=github-pr-review -tee
       # - run: go vet ./... 2>&1 | ~/bin/reviewdog -f=govet  -diff="git diff FETCH_HEAD" -tee
 
 jobs:
