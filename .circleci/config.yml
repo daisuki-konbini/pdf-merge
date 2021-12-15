@@ -21,5 +21,3 @@ workflows:
   lint:
     jobs:
       - lint
-
-      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
