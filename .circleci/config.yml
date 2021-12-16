@@ -14,8 +14,8 @@ jobs:
       - run: go get -u golang.org/x/lint/golint
       - run:
           command: |-
-            set +o pipefail
-            golint ./... | reviewdog -f=golint -name=golint-circleci -reporter=github-pr-review -tee
+            set -o pipefail
+            reviewdog -conf=./.reviewdog.yml -reporter=github-pr-review
 workflows:
   version: 2
   lint:
